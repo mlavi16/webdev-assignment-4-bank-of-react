@@ -18,7 +18,7 @@ class App extends Component {
   constructor() {  // Create and initialize state
     super(); 
     this.state = {
-      accountBalance: 1234567.89,
+      accountBalance: 0.0,
       debitList: [],
       currentUser: {
         userName: 'Joe Smith',
@@ -76,6 +76,18 @@ class App extends Component {
     }
   }
 
+  addDebit = (event) => {
+    event.preventDefault();
+
+    const target = event.target;
+    const date = new Date();
+    const dateString = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
+    const debit = {"id": this.state.debitList.length+1, "description": target[0].value, "amount": target[1].value, "date": dateString};
+    this.setState((prevState) => ({
+      debitList: [debit, ...prevState.debitList],
+      accountBalance: prevState.accountBalance - Number(target[1].value)
+    }))
+  }
 }
 
 export default App;
