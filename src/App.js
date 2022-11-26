@@ -57,6 +57,25 @@ class App extends Component {
       </Router>
     );
   }
+
+   async componentDidMount() {
+    const debitAPI = "https://johnnylaicode.github.io/api/debits.json";
+
+    try {
+      const debitResponse = await axios.get(debitAPI);
+      let accountBalance = this.state.accountBalance;
+      for (const data of debitResponse.data) {
+        accountBalance -= data.amount;
+      }
+      this.setState({ debitList: debitResponse.data, accountBalance: accountBalance });
+    } catch (error) {
+      if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+      }
+    }
+  }
+
 }
 
 export default App;
