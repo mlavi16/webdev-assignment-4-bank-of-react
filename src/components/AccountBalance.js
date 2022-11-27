@@ -9,9 +9,9 @@ class AccountBalance extends Component {
   // Display account balance
   render() {
     return (
-      <div>
-        Balance: {this.props.accountBalance}
-      </div>
+      <h3>
+        Balance: {this.props.accountBalance.toFixed(2)}
+      </h3>
     );
   }
 }
