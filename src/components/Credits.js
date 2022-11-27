@@ -10,7 +10,14 @@ const Credits = (props) => {
   return (
     <div>
       <h1>Credits</h1>
+
+      <form onSubmit={props.addCredit}>
+        <input type="text" name="description" />
+        <input type="number" name="amount" />
+        <button type="submit">Add Credit</button>
+      </form>
       <br/>
+
       <Link to="/">Return to Home</Link>
     </div>
   )
