@@ -63,14 +63,19 @@ class App extends Component {
 
    async componentDidMount() {
     const debitAPI = "https://johnnylaicode.github.io/api/debits.json";
+    const creditAPI = "https://johnnylaicode.github.io/api/credits.json";
 
     try {
       const debitResponse = await axios.get(debitAPI);
+      const creditResponse = await axios.get(creditAPI);
       let accountBalance = this.state.accountBalance;
       for (const data of debitResponse.data) {
         accountBalance -= data.amount;
       }
-      this.setState({ debitList: debitResponse.data, accountBalance: accountBalance });
+      for (const data of creditResponse.data) {
+        accountBalance += data.amount;
+      }
+      this.setState({ creditList: creditResponse.data, debitList: debitResponse.data, accountBalance: accountBalance });
     } catch (error) {
       if (error.response) {
         console.log(error.response.data);
