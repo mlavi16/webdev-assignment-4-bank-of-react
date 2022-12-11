@@ -1,4 +1,14 @@
-# bank-of-react-example-code-gh-pages
+# This repository is the code for Assignment 4 - Bank of React.
+
+[Github pages](https://mlavi16.github.io/webdev-assignment-4-bank-of-react/)
+
+Created by Maya Lavi (@mlavi16)
+
+----------
+
+
+
+
 This repository contains a React application example on how to implement client-side routing with React Router and its components including Route, Router Link, and Redirect.
 
 ### Use the following commands to run the application
@@ -12,7 +22,7 @@ Note: This application uses React Router version 5. Optionally, you can run the 
 ```npm install react-router-dom@5.3.0 react-router@5.2.1```
 
 ### Live Link 
-[Website link](https://johnnylaicode.github.io/bank-of-react-example-code-gh-pages/)
+[Example website link](https://johnnylaicode.github.io/bank-of-react-example-code-gh-pages/)
 
 ----------
 ### Use the following steps to set up and deploy the React application to GitHub Pages
