@@ -62,6 +62,7 @@ class App extends Component {
   }
 
    async componentDidMount() {
+    // Fetch credits and debits data from endpoint
     const debitAPI = "https://johnnylaicode.github.io/api/debits.json";
     const creditAPI = "https://johnnylaicode.github.io/api/credits.json";
 
@@ -85,6 +86,7 @@ class App extends Component {
   }
 
   addCredit = (event) => {
+    // read the description and amount from the event target and add to the list of credits.
     event.preventDefault();
 
     const target = event.target;
@@ -98,6 +100,7 @@ class App extends Component {
   }
 
   addDebit = (event) => {
+    // read the description and amount from the event target and add to the list of debits.
     event.preventDefault();
 
     const target = event.target;
