@@ -20,6 +20,7 @@ class App extends Component {
     super(); 
     this.state = {
       accountBalance: 0.0,
+      creditList: [],
       debitList: [],
       currentUser: {
         userName: 'Joe Smith',
@@ -43,6 +44,7 @@ class App extends Component {
       <UserProfile userName={this.state.currentUser.userName} memberSince={this.state.currentUser.memberSince} />
     );
     const LogInComponent = () => (<LogIn user={this.state.currentUser} mockLogIn={this.mockLogIn} />)
+    const CreditsComponent = () => (<Credits credits={this.state.creditList} addCredit={this.addCredit}/>)
     const DebitsComponent = () => (<Debits debits={this.state.debitList} addDebit={this.addDebit}/>) 
 
     // Important: Include the "basename" in Router, which is needed for deploying the React app to GitHub Pages
@@ -52,7 +54,7 @@ class App extends Component {
           <Route exact path="/" render={HomeComponent}/>
           <Route exact path="/userProfile" render={UserProfileComponent}/>
           <Route exact path="/login" render={LogInComponent}/>
-          <Route exact path="/credits" render={Credits}/>
+          <Route exact path="/credits" render={CreditsComponent}/>
           <Route exact path="/debits" render={DebitsComponent}/>
         </div>
       </Router>
@@ -61,20 +63,38 @@ class App extends Component {
 
    async componentDidMount() {
     const debitAPI = "https://johnnylaicode.github.io/api/debits.json";
+    const creditAPI = "https://johnnylaicode.github.io/api/credits.json";
 
     try {
       const debitResponse = await axios.get(debitAPI);
+      const creditResponse = await axios.get(creditAPI);
       let accountBalance = this.state.accountBalance;
       for (const data of debitResponse.data) {
         accountBalance -= data.amount;
       }
-      this.setState({ debitList: debitResponse.data, accountBalance: accountBalance });
+      for (const data of creditResponse.data) {
+        accountBalance += data.amount;
+      }
+      this.setState({ creditList: creditResponse.data, debitList: debitResponse.data, accountBalance: accountBalance });
     } catch (error) {
       if (error.response) {
         console.log(error.response.data);
         console.log(error.response.status);
       }
     }
+  }
+
+  addCredit = (event) => {
+    event.preventDefault();
+
+    const target = event.target;
+    const date = new Date();
+    const dateString = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
+    const credit = {"id": this.state.creditList.length+1, "description": target[0].value, "amount": target[1].value, "date": dateString};
+    this.setState((prevState) => ({
+      creditList: [credit, ...prevState.creditList],
+      accountBalance: prevState.accountBalance + Number(target[1].value)
+    }))
   }
 
   addDebit = (event) => {
